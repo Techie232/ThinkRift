@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const Course = require('../models/Course');
 const User = require('../models/User');
 const mailSender = require('../utils/mailSender');
-const { courseEnrolmentEmail } = require("../mail/templates/courseEnrolmentEmail");
+const { courseEnrollmentEmail } = require("../mail/templates/courseEnrolmentEmail");
 const { paymentSuccessEmail } = require('../mail/templates/paymentSuccessEmail')
 const crypto = require('crypto');
 const CourseProgress = require('../models/CourseProgress');
@@ -166,7 +166,7 @@ const enrollStudents = async (courses, userId) => {
          const emailResponse = await mailSender(
             enrolledStudent.email,
             `Successfully Enrolled into ${enrolledCourse.courseName}`,
-            courseEnrolmentEmail(enrolledCourse.courseName, `${enrolledStudent.firstName + enrolledStudent.lastName}`)
+            courseEnrollmentEmail(enrolledCourse.courseName, `${enrolledStudent.firstName + enrolledStudent.lastName}`)
          )
 
       } catch (error) {
