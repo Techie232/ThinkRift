@@ -76,7 +76,7 @@ const Navbar = () => {
 
             <nav className={`md:flex ${isMobileMenuOpen ? 'block absolute top-16 left-0 w-full bg-richblack-800 px-6 py-4 z-50 text-center' : 'hidden'} md:static md:w-auto md:bg-transparent`}>
                <ul className='flex flex-col md:flex-row md:items-center gap-4 md:gap-x-6 text-richblack-25'>
-                  {NavbarLinks.map((link, index) => (
+                  {NavbarLinks?.map((link, index) => (
                      <li key={index} onClick={handleClick}>
                         {link.title === 'Catalog' ? (
                            <div className={`group relative ${matchRoute("catalog/*") ? 'text-yellow-25' : 'text-richblack-25'}`}>
