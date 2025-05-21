@@ -66,8 +66,8 @@ const resetPasswordTemplate = (resetLink) => {
 	
 	<body>
 		<div class="container">
-			<a href="https://res.cloudinary.com/dfd1cvajy/image/upload/v1747568282/Codehelp/study-notion_ty5ujx.png"><img class="logo"
-					src="" alt="Thinkrift Logo"></a>
+			<a href="https://thinkrift.onrender.com"><img class="logo"
+					src="https://res.cloudinary.com/dfd1cvajy/image/upload/v1747568282/Codehelp/study-notion_ty5ujx.png" alt="Thinkrift Logo"></a>
 			<div class="message">Password Reset Request</div>
 			<div class="body">
 				<p>Dear User,</p>
