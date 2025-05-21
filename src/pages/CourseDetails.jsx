@@ -4,6 +4,7 @@ import { HiOutlineGlobeAlt } from "react-icons/hi"
 import ReactMarkdown from 'react-markdown'
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate, useParams } from "react-router-dom"
+import { addToCart } from "../slices/cartSlice";
 
 import ConfirmationModal from "../components/common/ConfirmationModal"
 import Footer from "../components/common/Footer"
@@ -15,6 +16,8 @@ import { fetchCourseDetails } from "../services/operations/courseDetailsAPI"
 import { buyCourse } from "../services/operations/studentFeaturesAPI"
 import GetAvgRating from "../utils/avgRating"
 import Error from "./Error"
+import { ACCOUNT_TYPE } from "../utils/constants"
+import toast from "react-hot-toast"
 
 function CourseDetails() {
    const { user } = useSelector((state) => state.profile)
@@ -68,6 +71,24 @@ function CourseDetails() {
       setTotalNoOfLectures(lectures)
    }, [response])
 
+   const handleAddToCart = () => {
+      if (user && user?.accountType === ACCOUNT_TYPE.INSTRUCTOR) {
+         toast.error("You are an Instructor. You can't buy a course.")
+         return
+      }
+      if (token) {
+         dispatch(addToCart(response?.data?.courseDetails))
+         return
+      }
+      setConfirmationModal({
+         text1: "You are not logged in!",
+         text2: "Please login to add To Cart",
+         btn1Text: "Login",
+         btn2Text: "Cancel",
+         btn1Handler: () => navigate("/login"),
+         btn2Handler: () => setConfirmationModal(null),
+      })
+   }
 
    if (loading || !response) {
       return (
@@ -163,21 +184,27 @@ function CourseDetails() {
                      </div>
                   </div>
                   <div className="flex w-full flex-col gap-4 border-y border-y-richblack-500 py-4 lg:hidden">
-                     <p className="space-x-3 pb-4 text-3xl font-semibold text-richblack-5">
+                     <p className="space-x-3 pb-4 text-3xl text-center font-semibold text-richblack-5">
                         Rs. {price}
                      </p>
-                     <button className="yellowButton" onClick={handleBuyCourse}>
+                     <button className="yellowButton bg-yellow-100 rounded-md w-fit mx-auto p-2" onClick={handleBuyCourse}>
                         Buy Now
                      </button>
-                     <button className="blackButton">Add to Cart</button>
+                     {
+                        token &&
+                        <button className="blackButton bg-richblack-100 rounded-md w-fit mx-auto p-2"
+                           onClick={handleAddToCart}
+                        >Add to Cart</button>
+                     }
                   </div>
                </div>
                {/* Courses Card */}
-               <div className="right-[1rem] top-[60px] mx-auto hidden min-h-[600px] w-1/3 max-w-[410px] translate-y-24 md:translate-y-0 lg:absolute  lg:block">
+               <div className="right-[1rem] top-[60px] mx-auto hidden min-h-[600px] w-1/3 max-w-[410px] translate-y-24 md:translate-y-0 lg:absolute lg:block">
                   <CourseDetailsCard
                      course={response?.data?.courseDetails}
                      setConfirmationModal={setConfirmationModal}
                      handleBuyCourse={handleBuyCourse}
+                     handleAddToCart={handleAddToCart}
                   />
                </div>
             </div>

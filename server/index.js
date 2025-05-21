@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const express = require('express');
 const app = express();
 
@@ -12,7 +14,6 @@ const cors = require('cors'); // by which i can make by backend to entertain req
 const { cloudinaryConnect } = require("./config/cloudinary");
 const fileUpload = require('express-fileupload');
 
-require('dotenv').config();
 const PORT = process.env.PORT || 4000;
 
 // db connect
@@ -23,7 +24,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
    cors({
-      origin: "http://localhost:3000",
+      origin: process.env.FRONTEND_URL,
       credentials: true,
    })
 )

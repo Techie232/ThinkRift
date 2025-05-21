@@ -27,7 +27,7 @@ const MyProfile = () => {
                </div>
             </div>
 
-            <div className="flex md:block bg-yellow-50 py-4 px-5 rounded-md cursor-pointer"
+            <div className="flex md:block bg-yellow-50 p-1 md:py-4 md:px-5 rounded-md cursor-pointer"
                onClick={() => {
                   navigate("/dashboard/settings")
                }}
@@ -46,7 +46,7 @@ const MyProfile = () => {
             <div className='flex w-full items-center justify-between'>
                <p className='text-xl font-semibold text-richblack-5'>About</p>
 
-               <div className="flex md:block bg-yellow-50 py-4 px-5 rounded-md cursor-pointer"
+               <div className="flex md:block bg-yellow-50 p-1 md:py-4 md:px-5 rounded-md cursor-pointer"
                   onClick={() => {
                      navigate("/dashboard/settings")
                   }}
@@ -66,7 +66,7 @@ const MyProfile = () => {
             <div className='flex w-full items-center justify-between'>
                <p className='text-xl font-semibold text-richblack-5'>Personal Details</p>
 
-               <div className="flex md:block bg-yellow-50 py-4 px-5 rounded-md cursor-pointer"
+               <div className="flex md:block bg-yellow-50 p-1 md:py-4 md:px-5 rounded-md cursor-pointer"
                   onClick={() => {
                      navigate("/dashboard/settings")
                   }}
@@ -95,7 +95,7 @@ const MyProfile = () => {
                </div>
 
 
-               <div className='flex flex-col gap-y-5 ml-52'>
+               <div className='flex flex-col gap-y-5 ml-50'>
                   <div>
                      <p className='mb-2 text-lg text-richblack-100'>Last Name</p>
                      <p className='text-base font-medium text-richblack-5'>{user?.lastName}</p>

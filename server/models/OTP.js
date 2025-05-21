@@ -23,7 +23,7 @@ async function sendVerificationEmail(email, otp) {
 
    const mailResponse = await mailSender(
       email,
-      "Verification Email from StudyNotion",
+      "Verification Email from Thinkrift",
       otpTemplate(otp)
    );
 }

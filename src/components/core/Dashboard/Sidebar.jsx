@@ -13,7 +13,7 @@ const Sidebar = () => {
    const { loading: authLoading } = useSelector((state) => state.auth);
    const dispatch = useDispatch();
    const navigate = useNavigate();
-   
+
    const [confirmationModal, setConfirmationModal] = useState(null);
 
    if (profileLoading || authLoading) {
@@ -25,8 +25,8 @@ const Sidebar = () => {
    }
 
    return (
-      <div className=' text-white bg-richblack-800'>
-         <div className='hidden min-w-[222px] flex-col border-r-[1px] border-r-richblack-700 lg:flex
+      <div className='text-white bg-richblack-800'>
+         <div className='md:min-w-[222px] flex-col border-r-[1px] border-r-richblack-700 md:flex
         h-[calc[100vh-3.5rem)] bg-richblack-800 py-10'>
 
             <div className='flex flex-col'>
@@ -36,12 +36,13 @@ const Sidebar = () => {
                      return (
                         <SidebarLink key={link.id} link={link} iconName={link.icon} />
                      )
-                  })}
+                  })
+               }
             </div>
 
             <div className='mx-auto mt-6 mb-6 h-[1px] w-10/12 bg-richblack-600'></div>
 
-            <div className='flex flex-col'>
+            <div className='flex flex-col items-center md:items-start'>
                <SidebarLink
                   link={{ name: "Settings", path: "/dashboard/settings" }}
                   iconName="VscSettingsGear"

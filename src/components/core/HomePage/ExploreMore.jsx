@@ -39,7 +39,7 @@ const ExploreMore = () => {
          </div>
 
          {/* Tabs Section */}
-         <div className="hidden lg:flex gap-5 -mt-5 mx-auto w-max bg-richblack-800 text-richblack-200 p-1 rounded-full font-medium drop-shadow-[0_1.5px_rgba(255,255,255,0.25)]">
+         <div className="hidden md:flex md:mb-5 gap-5 -mt-5 mx-auto w-max bg-richblack-800 text-richblack-200 p-1 rounded-full font-medium drop-shadow-[0_1.5px_rgba(255,255,255,0.25)]">
             {
                tabsName.map((ele, index) => {
                   return (
@@ -57,16 +57,15 @@ const ExploreMore = () => {
                })
             }
          </div>
-         <div className="hidden lg:block lg:h-[200px]"></div>
 
          {/* Cards Group */}
 
          <div className="relative w-full mb-8 mx-auto">
-            <div className="absolute flex gap-10  lg:gap-0 lg:justify-between w-full lg:bottom-[0] lg:left-[50%] lg:translate-x-[-50%] lg:translate-y-[50%] text-black lg:mb-0 mb-7 lg:px-0 px-3">
+            <div className="flex flex-col md:flex-row gap-10 lg:gap-0 lg:justify-between w-full lg:bottom-[0] lg:left-[50%]   text-black lg:mb-0 mb-7 lg:px-0 px-3">
                {
                   courses.map((ele, index) => {
                      return (
-                        <CourseCard
+                        <CourseCard 
                            key={index}
                            cardData={ele}
                            currentCard={currentCard}

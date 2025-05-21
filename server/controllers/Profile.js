@@ -4,7 +4,6 @@ const { uploadImageToCloudinary } = require('../utils/imageUploader');
 const Course = require("../models/Course");
 const CourseProgress = require("../models/CourseProgress");
 const { convertSecondsToDuration } = require("../utils/secToDuration")
-require('dotenv').config();
 
 exports.updateProfile = async (req, res) => {
    try {
@@ -81,7 +80,6 @@ exports.deleteAccount = async (req, res) => {
       // delete profile
       await Profile.findByIdAndDelete({ _id: userDetails.additionalDetails });
 
-      //* TODO : Unenroll user form all enrolled Courses 
       for (const courseId of userDetails.courses) {
          await Course.findByIdAndUpdate(
             courseId,

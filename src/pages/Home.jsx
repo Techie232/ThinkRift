@@ -16,7 +16,7 @@ const Home = () => {
    return (
       <div className=''>
          {/* Section 1 */}
-         <div className='relaive mx-auto flex flex-col w-11/12 max-w-maxContent items-center text-white justify-between
+         <div className='relaive overflow-hidden mx-auto flex flex-col w-11/12 max-w-maxContent items-center text-white justify-between
          '>
             <Link to={'/signup'}>
 
@@ -52,7 +52,7 @@ const Home = () => {
                </CTAButton>
             </div>
 
-            <div className='mx-20 my-12 shadow-[0_-20px_50px_rgba(8,_112,_0,_0.7)]'>
+            <div className='mx-20 my-12 w-full md:w-[85%] shadow-[0_-20px_50px_rgba(8,_112,_0,_0.7)]'>
                <video
                   muted
                   loop
@@ -156,14 +156,14 @@ const Home = () => {
 
             <div className='mx-auto w-11/12 max-w-maxContent flex flex-col items-center justify-between gap-7'>
 
-               <div className='flex gap-5 justify-between mb-10 mt-[95px]'>
-                  <div className='text-4xl font-semibold w-[45%]'>
+               <div className='flex flex-col w-full md:flex-row gap-5 justify-between mb-10 mt-[95px]'>
+                  <div className='text-4xl font-semibold w-full md:w-[45%]'>
                      Get the skills you need for a
                      <HighlightText text={'Job that is in demand.'} />
                   </div>
 
-                  <div className='flex flex-col gap-10 w-[40%] items-start'>
-                     <div className='text-16px'>The modern StudyNotion is the dictates its own terms. Today, to be a competitive specialist
+                  <div className='flex flex-col gap-10 w-full md:w-[40%] items-start'>
+                     <div className='text-16px'>The modern Thinkrift is the dictates its own terms. Today, to be a competitive specialist
                         requires more than professional skills.
                      </div>
                      <CTAButton active={true} linkto={'/signup'}>

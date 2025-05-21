@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
 const { roles } = require('../ common/roles');
-require('dotenv').config();
 
 // auth
 exports.auth = async (req, res, next) => {

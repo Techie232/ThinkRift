@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react"
 import ReactStars from "react-stars"
-// Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react"
 import { Autoplay, Pagination, Navigation } from "swiper/modules"
 
@@ -39,14 +38,15 @@ function ReviewSlider() {
                autoplay={{
                   delay: 1500,
                   disableOnInteraction: false,
+                  pauseOnMouseEnter : true,
                }}
                modules={[Autoplay, Pagination, Navigation]}
             >
                {reviews.map((review, i) => {
                   return (
-                     <SwiperSlide key={i}>
-                        <div className="flex flex-col gap-3 bg-richblack-800 p-3 text-[14px] text-richblack-25 rounded-lg">
-                           <div className="flex items-center gap-4">
+                     <SwiperSlide key={i} className="flex items-center justify-center">
+                        <div className="w-[320px] h-[220px] border border-yellow-100 bg-richblack-800 rounded-lg p-4 flex items-center justify-center text-richblack-25">
+                           <div className="flex flex-col items-center justify-center gap-3 text-center">
                               <img
                                  src={
                                     review?.user?.image
@@ -56,41 +56,42 @@ function ReviewSlider() {
                                  alt=""
                                  className="h-9 w-9 rounded-full object-cover"
                               />
-                              <div className="flex flex-col">
-                                 <h1 className="font-semibold text-richblack-5">{`${review?.user?.firstName} ${review?.user?.lastName}`}</h1>
+                              <div>
+                                 <h1 className="font-semibold text-richblack-5">
+                                    {`${review?.user?.firstName} ${review?.user?.lastName}`}
+                                 </h1>
                                  <h2 className="text-[12px] font-medium text-richblack-500">
                                     {review?.course?.courseName}
                                  </h2>
                               </div>
-                           </div>
-                           <p className="font-medium text-richblack-25">
-                              {review?.review.split(" ").length > truncateWords
-                                 ? `${review?.review
-                                    .split(" ")
-                                    .slice(0, truncateWords)
-                                    .join(" ")} ...`
-                                 : `${review?.review}`}
-                           </p>
-                           <div className="flex items-center gap-2 ">
-                              <h3 className="font-semibold text-yellow-100">
-                                 {review.rating.toFixed(1)}
-                              </h3>
-                              <ReactStars
-                                 count={5}
-                                 value={review.rating}
-                                 size={20}
-                                 edit={false}
-                                 activeColor="#ffd700"
-                                 emptyIcon={<FaStar />}
-                                 fullIcon={<FaStar />}
-                              />
+                              <p className="font-medium text-richblack-25">
+                                 {review?.review.split(" ").length > truncateWords
+                                    ? `${review?.review.split(" ").slice(0, truncateWords).join(" ")} ...`
+                                    : `${review?.review}`}
+                              </p>
+                              <div className="flex items-center gap-2">
+                                 <h3 className="font-semibold text-yellow-100">
+                                    {review.rating.toFixed(1)}
+                                 </h3>
+                                 <ReactStars
+                                    count={5}
+                                    value={review.rating}
+                                    size={20}
+                                    edit={false}
+                                    activeColor="#ffd700"
+                                    emptyIcon={<FaStar />}
+                                    fullIcon={<FaStar />}
+                                 />
+                              </div>
                            </div>
                         </div>
                      </SwiperSlide>
+
                   )
                })}
                {/* <SwiperSlide>Slide 1</SwiperSlide> */}
             </Swiper>
+
          </div>
       </div>
    )

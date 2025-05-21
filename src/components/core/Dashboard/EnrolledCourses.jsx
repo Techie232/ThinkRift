@@ -35,7 +35,6 @@ export default function EnrolledCourses() {
          ) : !enrolledCourses.length ? (
             <p className="grid h-[10vh] w-full place-content-center text-2xl text-richblack-5">
                You have not enrolled in any course yet.
-               {/* TODO: Modify this Empty State */}
             </p>
          ) : (
             <div className="my-8 text-richblack-5">

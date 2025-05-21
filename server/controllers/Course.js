@@ -7,7 +7,6 @@ const CourseProgress = require('../models/CourseProgress');
 const { uploadImageToCloudinary } = require('../utils/imageUploader');
 const { PiCurrencyDollarSimpleDuotone } = require("react-icons/pi");
 const { convertSecondsToDuration } = require("../utils/secToDuration")
-require('dotenv').config();
 
 // create course handler function
 exports.createCourse = async (req, res) => {

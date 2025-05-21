@@ -1,20 +1,20 @@
 import { useEffect, useState } from "react"
 import { BsChevronDown } from "react-icons/bs"
 import { IoIosArrowBack } from "react-icons/io"
+import { GiHamburgerMenu } from "react-icons/gi"
 import { useSelector } from "react-redux"
 import { useLocation, useNavigate, useParams } from "react-router-dom"
 import IconBtn from "../../common/IconBtn"
 
 export default function VideoDetailsSidebar({ setReviewModal }) {
-
-   // current active section
-   const [activeStatus, setActiveStatus] = useState("")
-   // current active video(subsection)
-   const [videoBarActive, setVideoBarActive] = useState("")
+   const [activeSection, setActiveSection] = useState("")
+   const [activeSubSection, setActiveSubSection] = useState("")
+   const [sidebarOpen, setSidebarOpen] = useState(true) 
 
    const navigate = useNavigate()
    const location = useLocation()
    const { sectionId, subSectionId } = useParams()
+
    const {
       courseSectionData,
       courseEntireData,
@@ -23,106 +23,105 @@ export default function VideoDetailsSidebar({ setReviewModal }) {
    } = useSelector((state) => state.viewCourse)
 
    useEffect(() => {
-      ; (() => {
-         if (!courseSectionData.length) return
+      if (!courseSectionData.length) return
 
-         const currentSectionIndx = courseSectionData.findIndex(
-            (data) => data._id === sectionId
-         )
-         const currentSubSectionIndx = courseSectionData?.[currentSectionIndx]?.subSection.findIndex(
-            (data) => data._id === subSectionId
-         )
-         const activeSubSectionId =
-            courseSectionData[currentSectionIndx]?.subSection?.[currentSubSectionIndx]?._id
+      const currentSection = courseSectionData.find((sec) => sec._id === sectionId)
+      const currentSubSection = currentSection?.subSection.find((sub) => sub._id === subSectionId)
 
-         setActiveStatus(courseSectionData?.[currentSectionIndx]?._id)
-         setVideoBarActive(activeSubSectionId)
-      })()
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-   }, [courseSectionData, courseEntireData, location.pathname])
+      setActiveSection(currentSection?._id || "")
+      setActiveSubSection(currentSubSection?._id || "")
+   }, [courseSectionData, location.pathname, sectionId, subSectionId])
 
    return (
-      <>
-         <div className="flex h-[calc(100vh-3.5rem)] w-[320px] max-w-[350px] flex-col border-r-[1px] border-r-richblack-700 bg-richblack-800">
-            <div className="mx-5 flex flex-col items-start justify-between gap-2 gap-y-4 border-b border-richblack-600 py-5 text-lg font-bold text-richblack-25">
-               <div className="flex w-full items-center justify-between ">
+      <div  
+         className={`fixed top-[3.5rem] z-50 left-0 h-[calc(100vh-3.5rem)] bg-richblack-800 border-r border-richblack-700 transition-width duration-300 ease-in-out
+        ${sidebarOpen ? "w-[200px] md:w-[320px]" : "w-5"}`}
+      >
+         {/* Hamburger always visible, positioned on top-left */}
+         <div
+            className="absolute top-16 left-6 text-yellow-400 cursor-pointer z-50"
+            onClick={() => setSidebarOpen((prev) => !prev)}
+            title={sidebarOpen ? "Hide Sidebar" : "Show Sidebar"}
+         >
+            <GiHamburgerMenu size={20} />
+         </div>
 
-                  <div
-                     onClick={() => {
-                        navigate(`/dashboard/enrolled-courses`)
-                     }}
-                     className="flex h-[35px] w-[35px] items-center justify-center rounded-full bg-richblack-100 p-1 text-richblack-700 hover:scale-90"
-                     title="back"
-                  >
-                     <IoIosArrowBack size={30} />
+         {/* Show full sidebar content only if sidebarOpen */}
+         {sidebarOpen && (
+            <div className="flex h-full flex-col">
+               {/* Header */}
+               <div className="mx-5 flex flex-col justify-between gap-4 border-b border-richblack-600 py-5 text-lg font-bold text-richblack-25">
+                  <div className="flex items-center justify-between gap-2">
+                     {/* Back button */}
+                     <button
+                        onClick={() => navigate(`/dashboard/enrolled-courses`)}
+                        title="Back"
+                        className="flex h-9 w-9 items-center justify-center rounded-full bg-richblack-100 p-1 text-richblack-700 hover:scale-90"
+                     >
+                        <IoIosArrowBack size={30} />
+                     </button>
+
+                     <IconBtn
+                        text="Add Review"
+                        customClasses="ml-auto"
+                        onclick={() => setReviewModal(true)}
+                     />
                   </div>
 
-                  <IconBtn
-                     text="Add Review"
-                     customClasses="ml-auto"
-                     onclick={() => setReviewModal(true)}
-                  />
+                  <div>
+                     <p>{courseEntireData?.courseName}</p>
+                     <p className="text-sm font-semibold text-richblack-500">
+                        {completedLectures?.length} / {totalNoOfLectures}
+                     </p>
+                  </div>
                </div>
-               <div className="flex flex-col">
-                  <p>{courseEntireData?.courseName}</p>
-                  <p className="text-sm font-semibold text-richblack-500">
-                     {completedLectures?.length} / {totalNoOfLectures}
-                  </p>
-               </div>
-            </div>
 
-            <div className="h-[calc(100vh - 5rem)] overflow-y-auto">
-               {courseSectionData.map((course, index) => (
-                  <div
-                     className="mt-2 cursor-pointer text-sm text-richblack-5"
-                     onClick={() => setActiveStatus(course?._id)}
-                     key={index}
-                  >
-                     {/* Section */}
-                     <div className="flex justify-between bg-richblack-600 px-5 py-4">
-                        <div className="w-[70%] font-semibold">
-                           {course?.sectionName}
+               {/* Section list */}
+               <div className="h-[calc(100vh - 5rem)] overflow-y-auto">
+                  {courseSectionData.map((section) => (
+                     <div key={section._id} className="mt-2 text-sm text-richblack-5">
+                        <div
+                           className="flex justify-between bg-richblack-600 px-5 py-4 cursor-pointer"
+                           onClick={() => setActiveSection(section._id)}
+                        >
+                           <div className="w-[70%] font-semibold">{section.sectionName}</div>
+                           <BsChevronDown
+                              className={`transition-transform ${activeSection === section._id ? "rotate-0" : "rotate-180"
+                                 }`}
+                           />
                         </div>
-                        <div className="flex items-center gap-3">
-                           <span
-                              className={`${activeStatus === course?._id ? "rotate-0" : "rotate-180"}`}
-                           >
-                              <BsChevronDown />
-                           </span>
-                        </div>
+
+                        {activeSection === section._id && (
+                           <div className="transition-[height] duration-500 ease-in-out">
+                              {section.subSection.map((sub) => (
+                                 <div
+                                    key={sub._id}
+                                    onClick={() => {
+                                       navigate(
+                                          `/view-course/${courseEntireData?._id}/section/${section._id}/sub-section/${sub._id}`
+                                       )
+                                       setActiveSubSection(sub._id)
+                                    }}
+                                    className={`flex items-center gap-3 px-5 py-2 cursor-pointer ${activeSubSection === sub._id
+                                          ? "bg-yellow-200 font-semibold text-richblack-800"
+                                          : "hover:bg-richblack-900"
+                                       }`}
+                                 >
+                                    <input
+                                       type="checkbox"
+                                       checked={completedLectures.includes(sub._id)}
+                                       readOnly
+                                    />
+                                    {sub.title}
+                                 </div>
+                              ))}
+                           </div>
+                        )}
                      </div>
-
-                     {/* Sub Sections */}
-                     {activeStatus === course?._id && (
-                        <div className="transition-[height] duration-500 ease-in-out">
-                           {course.subSection.map((topic, i) => (
-                              <div
-                                 className={`flex gap-3  px-5 py-2 ${videoBarActive === topic._id
-                                    ? "bg-yellow-200 font-semibold text-richblack-800"
-                                    : "hover:bg-richblack-900"
-                                    } `}
-                                 key={i}
-                                 onClick={() => {
-                                    navigate(
-                                       `/view-course/${courseEntireData?._id}/section/${course?._id}/sub-section/${topic?._id}`
-                                    )
-                                    setVideoBarActive(topic._id)
-                                 }}
-                              >
-                                 <input
-                                    type="checkbox"
-                                    checked={completedLectures.includes(topic?._id)}
-                                    onChange={() => { }}
-                                 />
-                                 {topic.title}
-                              </div>
-                           ))}
-                        </div>
-                     )}
-                  </div>
-               ))}
+                  ))}
+               </div>
             </div>
-         </div >
-      </>
+         )}
+      </div>
    )
 }

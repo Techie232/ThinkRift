@@ -128,7 +128,7 @@ const VideoDetails = () => {
    }
 
    return (
-      <div className="flex flex-col gap-5 text-white">
+      <div className="flex ml-10 mt-4 flex-col gap-5 text-white">
          {!videoData ? (
             <img
                src={previewSource}
@@ -142,6 +142,8 @@ const VideoDetails = () => {
                playsInline
                onEnded={() => setVideoEnded(true)}
                src={videoData?.videoUrl}
+               width={100}
+               height={100}
             >
                <BigPlayButton position="center" />
                {/* Render When Video Ends */}
@@ -151,7 +153,7 @@ const VideoDetails = () => {
                         backgroundImage:
                            "linear-gradient(to top, rgb(0, 0, 0), rgba(0,0,0,0.7), rgba(0,0,0,0.5), rgba(0,0,0,0.1)",
                      }}
-                     className="full absolute inset-0 z-[100] grid h-full place-content-center font-inter"
+                     className="full absolute inset-0 z-40 grid h-full place-content-center font-inter"
                   >
                      {!completedLectures.includes(subSectionId) && (
                         <IconBtn

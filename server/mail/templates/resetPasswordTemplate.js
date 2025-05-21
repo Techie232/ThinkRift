@@ -66,17 +66,17 @@ const resetPasswordTemplate = (resetLink) => {
 	
 	<body>
 		<div class="container">
-			<a href="https://studynotion-edtech-project.vercel.app"><img class="logo"
-					src="https://i.ibb.co/7Xyj3PC/logo.png" alt="StudyNotion Logo"></a>
+			<a href=""><img class="logo"
+					src="" alt="Thinkrift Logo"></a>
 			<div class="message">Password Reset Request</div>
 			<div class="body">
 				<p>Dear User,</p>
-				<p>We received a request to reset your password for your StudyNotion account. To reset your password, please click the link below:</p>
+				<p>We received a request to reset your password for your Thinkrift account. To reset your password, please click the link below:</p>
 				<a href="${resetLink}" class="cta">Reset Your Password</a>
 				<p>If you did not request a password reset, please ignore this email. Your account will remain secure.</p>
 			</div>
 			<div class="support">If you have any questions or need assistance, please feel free to reach out to us at <a
-					href="mailto:info@studynotion.com">info@studynotion.com</a>. We are here to help!</div>
+					href="mailto:info@Thinkrift.com">info@Thinkrift.com</a>. We are here to help!</div>
 		</div>
 	</body>
 	

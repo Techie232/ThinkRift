@@ -8,9 +8,9 @@ import ProfileDropDown from '../core/Auth/ProfileDropDown';
 import { apiConnector } from '../../services/apiconnector';
 import { categories } from '../../services/apis';
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+import { HiOutlineMenu, HiOutlineX } from 'react-icons/hi';
 
 const Navbar = () => {
-
    const { token } = useSelector((state) => state.auth);
    const { user } = useSelector((state) => state.profile);
    const { totalItems } = useSelector((state) => state.cart);
@@ -18,135 +18,130 @@ const Navbar = () => {
 
    const [subLinks, setSubLinks] = useState([]);
    const [loading, setLoading] = useState(false);
+   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
    const fetchSublinks = async () => {
       setLoading(true);
       try {
-         const res = await apiConnector("GET", categories.CATEGORIES_API)
+         const res = await apiConnector("GET", categories.CATEGORIES_API);
          setSubLinks(res.data.data);
       } catch (error) {
-
+         console.error(error);
       }
       setLoading(false);
-   }
+   };
 
    useEffect(() => {
       fetchSublinks();
-   }, [])
+   }, []);
 
-   const matchRoute = (route) => {
-      return matchPath({ path: route }, location.pathname)
+   const matchRoute = (route) => matchPath({ path: route }, location.pathname);
+
+   const handleClick = () => {
+      setIsMobileMenuOpen(false)
    }
 
    return (
-      <div className={`flex h-14 items-center justify-center border-b-[1px] border-b-richblack-700 bg-richblack-800 transition-all duration-200`}>
-
+      <div className='flex h-14 items-center justify-center border-b border-richblack-700 bg-richblack-800'>
          <div className='w-11/12 flex max-w-maxContent items-center justify-between'>
-
-            <Link to={'/'} >
-               <img src={Logo} width={160} height={32} />
+            <Link to='/'>
+               <img src={Logo} alt='Logo' className='h-[60px] w-[100px] object-cover' />
             </Link>
 
-            <nav>
-               <ul className='flex gap-x-6 text-richblack-25'>
-                  {
-                     NavbarLinks.map((link, index) => (
-                        <li key={index} >
-                           {
-                              (link.title === 'Catalog') ?
-                                 (<div className={`${matchRoute("catalog/*") ? 'text-yellow-25' : 'text-richblack-25'} flex items-center cursor-pointer group relative z-50`}>
-                                    <p>{link.title}</p>
-                                    <MdOutlineKeyboardArrowDown size={20} />
+            <div className='md:hidden'>
+               <button onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+                  {isMobileMenuOpen ? (
+                     <HiOutlineX className='text-white text-2xl' />
+                  ) : (
+                     <HiOutlineMenu className='text-white text-2xl' />
+                  )}
+               </button>
+            </div>
 
-                                    <div className='invisible absolute left-[50%] translate-x-[-50%] translate-y-[9%] top-[50%] flex flex-col rounded-md 
-                                    bg-richblack-5 p-4 text-richblue-900 opacity-0 transition-all duration-200 
-                                    group-hover:visible group-hover:opacity-100 lg:w-[300px]'>
-
-                                       <div className='absolute left-[50%] translate-x-[80%] translate-y-[-45%] top-0 h-6 w-6 rotate-45 rounded
-                                       bg-richblack-5'>
-
-                                       </div>
-
-                                       {
-                                          subLinks.length ?
-                                             (
-                                                subLinks.map((subLink, index) => (
-                                                   <Link to={`/catalog/${subLink.name.split(" ").join('-').toLowerCase()}`} key={index}>
-                                                      <p className='hover:bg-richblack-50 rounded-md px-2 py-3'>{subLink.name}</p>
-                                                   </Link>
-                                                ))
-                                             )
-                                             : (<div>No Courses Found</div>)
-                                       }
-
-                                    </div>
-
-                                 </div>) :
-                                 (
-                                    <Link to={link?.path}>
-                                       <p className={`${matchRoute(link?.path) ? 'text-yellow-25' :
-                                          'text-richblack-25'}`}>
-                                          {
-                                             link.title
-                                          }
-                                       </p>
-                                    </Link>
-                                 )
-                           }
-                        </li>
-                     ))
-                  }
-               </ul>
-            </nav>
-
-            {/* Login/Signup/Dashboard */}
-            <div className='flex gap-x-4 items-center'>
-
+            <div className='flex gap-2 md:hidden'>
                {
                   user && user?.accountType !== "Instructor" && (
                      <Link to="/dashboard/cart" className="relative">
                         <AiOutlineShoppingCart className="text-2xl text-richblack-100" />
                         {totalItems > 0 && (
-                           <span className="absolute -bottom-2 -right-2  h-4 w-5 place-items-center overflow-hidden rounded-full bg-richblack-500 text-center text-xs font-bold text-yellow-100 animate-bounce">
+                           <span className="absolute -bottom-2 -right-2 h-4 w-5 grid place-items-center rounded-full bg-richblack-500 text-xs font-bold text-yellow-100 animate-bounce">
                               {totalItems}
                            </span>
                         )}
                      </Link>
                   )
                }
-
-               {
-                  token === null && (
-                     <Link to={'/login'}>
-                        <button className='border border-richblue-700 bg-richblack-700 px-[12px] py-[8px]
-                        text-richblack-100 rounded-md'>
-                           Log in
-                        </button>
-                     </Link>
-                  )
-               }
-
-               {
-                  token === null && (
-                     <Link to={'/signup'}>
-                        <button className='border border-richblue-700 bg-richblack-700 px-[12px] py-[8px]
-                        text-richblack-100 rounded-md'>
-                           Sign up
-                        </button>
-                     </Link>
-                  )
-               }
-
-               {
-                  token !== null && <ProfileDropDown />
-               }
-
+               {token && <ProfileDropDown />}
             </div>
 
+            <nav className={`md:flex ${isMobileMenuOpen ? 'block absolute top-16 left-0 w-full bg-richblack-800 px-6 py-4 z-50 text-center' : 'hidden'} md:static md:w-auto md:bg-transparent`}>
+               <ul className='flex flex-col md:flex-row md:items-center gap-4 md:gap-x-6 text-richblack-25'>
+                  {NavbarLinks.map((link, index) => (
+                     <li key={index} onClick={handleClick}>
+                        {link.title === 'Catalog' ? (
+                           <div className={`group relative ${matchRoute("catalog/*") ? 'text-yellow-25' : 'text-richblack-25'}`}>
+                              <p className='flex items-center justify-center cursor-pointer'>
+                                 {link.title} <MdOutlineKeyboardArrowDown size={20} />
+                              </p>
+                              <div className='hidden group-hover:flex flex-col absolute left-1/2 -translate-x-1/3 -translate-y-2 top-full mt-2 bg-richblack-5 p-4 rounded-md shadow-md z-50 w-72'>
+                                 {subLinks.length ? subLinks.map((subLink, i) => (
+                                    <Link key={i} to={`/catalog/${subLink.name.split(" ").join('-').toLowerCase()}`} className='hover:bg-richblack-50 px-2 py-2 rounded text-black'>
+                                       {subLink.name}
+                                    </Link>
+                                 )) : <p>No Courses Found</p>}
+                              </div>
+                           </div>
+                        ) : (
+                           <Link to={link?.path} className={matchRoute(link?.path) ? 'text-yellow-25' : 'text-richblack-25'}>
+                              {link.title}
+                           </Link>
+                        )}
+                     </li>
+                  ))}
+
+                  {
+                     !token && isMobileMenuOpen && (
+                        <div className='flex justify-between'>
+                           <Link to={'/login'} onClick={handleClick}>
+                              <button className='bg-richblack-400 p-2 rounded-xl'>Login</button>
+                           </Link>
+                           <Link to={'/signup'} onClick={handleClick}>
+                              <button className='bg-richblack-400 p-2 rounded-xl'>Singup</button>
+                           </Link>
+
+                        </div>)
+                  }
+               </ul>
+            </nav>
+
+            <div className='hidden md:flex gap-x-4 items-center'>
+               {user && user?.accountType !== "Instructor" && (
+                  <Link to="/dashboard/cart" className="relative">
+                     <AiOutlineShoppingCart className="text-2xl text-richblack-100" />
+                     {totalItems > 0 && (
+                        <span className="absolute -bottom-2 -right-2 h-4 w-5 grid place-items-center rounded-full bg-richblack-500 text-xs font-bold text-yellow-100 animate-bounce">
+                           {totalItems}
+                        </span>
+                     )}
+                  </Link>
+               )}
+
+               {!token && (
+                  <>
+                     <Link to='/login'>
+                        <button className='border border-richblue-700 bg-richblack-700 px-3 py-2 text-richblack-100 rounded-md'>Log in</button>
+                     </Link>
+                     <Link to='/signup'>
+                        <button className='border border-richblue-700 bg-richblack-700 px-3 py-2 text-richblack-100 rounded-md'>Sign up</button>
+                     </Link>
+                  </>
+               )}
+
+               {token && <ProfileDropDown />}
+            </div>
          </div>
-
       </div>
-   )
-}
+   );
+};
 
-export default Navbar
+export default Navbar;
