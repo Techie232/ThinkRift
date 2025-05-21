@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const express = require('express');
 const app = express();
+const path = require('path');
 
 const userRoutes = require('./routes/User');
 const profileRoutes = require('./routes/Profile');
