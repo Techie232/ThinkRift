@@ -21,14 +21,14 @@
 - React Router
 - Axios
 - Tailwind CSS / CSS Modules (if used)
-- Context API / Redux (if applicable)
+- Redux Tookit (if applicable)
 
 ### Backend:
 - Node.js
 - Express.js
 - MongoDB (with Mongoose)
 - JWT for authentication
-- Multer / Cloudinary / Media service integration
+- ExpressFileUpload / Cloudinary / Media service integration
 
 ---
 
@@ -38,7 +38,7 @@
 thinkrift/
 ├── client/         # React frontend
 │   └── ...
-├── server/         # Express backend
+    ├── server/         # Express backend
 │   └── ...
 └── README.md
 ```
@@ -47,8 +47,8 @@ thinkrift/
 
 ## 🚀 Deployment
 
-- **Frontend:** Deployed on [Vercel](https://vercel.com) / Netlify
-- **Backend:** Deployed on [Render](https://render.com) / Railway / other hosting platforms
+- **Frontend:** Deployed on [Render](https://render.com) / Render
+- **Backend:** Deployed on [Render](https://render.com) / Render 
 - **Media Storage:** Integrated with [Cloudinary](https://cloudinary.com) (or similar)
 
 ---
