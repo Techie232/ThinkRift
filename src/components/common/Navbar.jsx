@@ -84,7 +84,7 @@ const Navbar = () => {
                                  {link.title} <MdOutlineKeyboardArrowDown size={20} />
                               </p>
                               <div className='hidden group-hover:flex flex-col absolute left-1/2 -translate-x-1/3 -translate-y-2 top-full mt-2 bg-richblack-5 p-4 rounded-md shadow-md z-50 w-72'>
-                                 {subLinks.length ? subLinks.map((subLink, i) => (
+                                 {subLinks?.length ? subLinks.map((subLink, i) => (
                                     <Link key={i} to={`/catalog/${subLink.name.split(" ").join('-').toLowerCase()}`} className='hover:bg-richblack-50 px-2 py-2 rounded text-black'>
                                        {subLink.name}
                                     </Link>
