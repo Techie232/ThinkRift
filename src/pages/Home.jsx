@@ -14,7 +14,7 @@ import ReviewSlider from '../components/common/ReviewSlider';
 
 const Home = () => {
    return (
-      <div className=''>
+      <div className=' overflow-x-hidden'>
          {/* Section 1 */}
          <div className='relaive overflow-hidden mx-auto flex flex-col w-11/12 max-w-maxContent items-center text-white justify-between
          '>

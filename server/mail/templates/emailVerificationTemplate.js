@@ -66,8 +66,8 @@ const otpTemplate = (otp) => {
 	
 	<body>
 		<div class="container">
-			<a href=""><img class="logo"
-					src="https://i.ibb.co/7Xyj3PC/logo.png" alt="Thinkrift Logo"></a>
+			<a href="https://thinkrift.onrender.com"><img class="logo"
+					src="https://res.cloudinary.com/dfd1cvajy/image/upload/v1747568282/Codehelp/study-notion_ty5ujx.png" alt="Thinkrift Logo"></a>
 			<div class="message">OTP Verification Email</div>
 			<div class="body">
 				<p>Dear User,</p>

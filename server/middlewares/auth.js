@@ -4,7 +4,6 @@ const { roles } = require('../ common/roles');
 // auth
 exports.auth = async (req, res, next) => {
    try {
-      // extract token
       const token = req.cookies.token || req.body.token || req.header('Authorization').replace('Bearer ', "");
 
       if (!token) {
@@ -14,14 +13,12 @@ exports.auth = async (req, res, next) => {
          })
       }
 
-      // verify the token
       try {
          const decode = jwt.verify(token, process.env.JWT_SECRET);
          req.user = decode;
 
       } catch (error) {
 
-         // verification issue
          return res.status(401).json({
             success: false,
             message: 'Token is invalid',
@@ -39,7 +36,6 @@ exports.auth = async (req, res, next) => {
    }
 }
 
-// isStudent
 exports.isStudent = async (req, res, next) => {
    try {
 
@@ -61,7 +57,6 @@ exports.isStudent = async (req, res, next) => {
    }
 }
 
-// isInstructor
 exports.isInstructor = async (req, res, next) => {
    try {
 
@@ -83,7 +78,6 @@ exports.isInstructor = async (req, res, next) => {
    }
 }
 
-// isAdmin
 exports.isAdmin = async (req, res, next) => {
    try {
 

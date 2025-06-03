@@ -56,8 +56,12 @@ const TimelineSection = () => {
 
             <div className='relative shadow-blue-200'>
 
-               <img src={timelineImage} width={450} alt='timelineimage' className='shadow-white rounded-md object-cover
-               h-fit'/>
+               <img
+                  src={timelineImage}
+                  alt='timelineimage'
+                  className='w-full max-w-[450px] h-auto rounded-md object-cover shadow-white'
+               />
+
 
                <div className='absolute bg-caribbeangreen-700 flex text-white uppercase py-7 px-20
                left-[50%] translate-x-[-50%] translate-y-[-100%]'>

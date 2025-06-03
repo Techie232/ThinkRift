@@ -44,6 +44,12 @@ function SignupForm() {
          toast.error("Passwords Do Not Match")
          return
       }
+
+      if (password?.length < 6 || confirmPassword?.length < 6) {
+         toast.error('Password should be minimum of 6 size');
+         return;
+      }
+
       const signupData = {
          ...formData,
          accountType,
@@ -86,7 +92,8 @@ function SignupForm() {
          <Tab tabData={tabData} field={accountType} setField={setAccountType} />
          {/* Form */}
          <form onSubmit={handleOnSubmit} className="flex w-full flex-col gap-y-4">
-            <div className="flex gap-x-4">
+            <div className="flex justify-between w-full">
+
                <label>
                   <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5">
                      First Name <sup className="text-pink-200">*</sup>
@@ -101,9 +108,10 @@ function SignupForm() {
                      style={{
                         boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
                      }}
-                     className="w-full rounded-[0.5rem] bg-richblack-800 p-[12px] text-richblack-5"
+                     className="w-[110%] rounded-[0.5rem] bg-richblack-800 p-[12px] text-richblack-5"
                   />
                </label>
+
                <label>
                   <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5">
                      Last Name <sup className="text-pink-200">*</sup>
@@ -128,7 +136,7 @@ function SignupForm() {
                </p>
                <input
                   required
-                  type="text"
+                  type="email"
                   name="email"
                   value={email}
                   onChange={handleOnChange}
@@ -195,9 +203,10 @@ function SignupForm() {
                   </span>
                </label>
             </div>
+            <span className={`relative mx-auto w-fit h-fit ${formData?.password?.length >= 6 && formData?.confirmPassword?.length >= 6 ? 'text-caribbeangreen-300' : 'text-pure-greys-300'}`}>Password Should be atleast of size 6</span>
             <button
                type="submit"
-               className="mt-6 rounded-[8px] bg-yellow-50 py-[8px] px-[12px] font-medium text-richblack-900"
+               className="mt-1 rounded-[8px] bg-yellow-50 py-[8px] px-[12px] font-medium text-richblack-900"
             >
                Create Account
             </button>
