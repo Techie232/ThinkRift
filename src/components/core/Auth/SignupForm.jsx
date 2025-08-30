@@ -92,9 +92,9 @@ function SignupForm() {
          <Tab tabData={tabData} field={accountType} setField={setAccountType} />
          {/* Form */}
          <form onSubmit={handleOnSubmit} className="flex w-full flex-col gap-y-4">
-            <div className="flex w-full">
+            <div className="flex w-full justify-between gap-2">
 
-               <label>
+               <label className="">
                   <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5">
                      First Name <sup className="text-pink-200">*</sup>
                   </p>
@@ -108,11 +108,11 @@ function SignupForm() {
                      style={{
                         boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
                      }}
-                     className="w-full md:w-[110%] rounded-[0.5rem] bg-richblack-800 p-[12px] text-richblack-5"
+                     className="w-full rounded-[0.5rem] bg-richblack-800 p-[12px] text-richblack-5"
                   />
                </label>
 
-               <label>
+               <label className="">
                   <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5">
                      Last Name <sup className="text-pink-200">*</sup>
                   </p>
