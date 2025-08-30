@@ -13,16 +13,20 @@ export default function EnrolledCourses() {
    const [enrolledCourses, setEnrolledCourses] = useState(null)
 
    useEffect(() => {
-      let toastId = toast.loading("Loading...")
       const getEnrolledCourses = async () => {
+         let toastId;
          try {
+            toastId = toast.loading("Loading...")
             const res = await getUserEnrolledCourses(token);
             setEnrolledCourses(res);
          } catch (error) {
+            toast.error("Something Went wrong");
+         }
+         finally {
+            toast.dismiss(toastId)
          }
       };
       getEnrolledCourses();
-      toast.dismiss(toastId)
    }, [])
 
    return (

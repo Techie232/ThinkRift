@@ -92,7 +92,7 @@ function SignupForm() {
          <Tab tabData={tabData} field={accountType} setField={setAccountType} />
          {/* Form */}
          <form onSubmit={handleOnSubmit} className="flex w-full flex-col gap-y-4">
-            <div className="flex justify-between w-full">
+            <div className="flex w-full">
 
                <label>
                   <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5">
@@ -108,7 +108,7 @@ function SignupForm() {
                      style={{
                         boxShadow: "inset 0px -1px 0px rgba(255, 255, 255, 0.18)",
                      }}
-                     className="w-[110%] rounded-[0.5rem] bg-richblack-800 p-[12px] text-richblack-5"
+                     className="w-full md:w-[110%] rounded-[0.5rem] bg-richblack-800 p-[12px] text-richblack-5"
                   />
                </label>
 
@@ -147,7 +147,7 @@ function SignupForm() {
                   className="w-full rounded-[0.5rem] bg-richblack-800 p-[12px] text-richblack-5"
                />
             </label>
-            <div className="flex gap-x-4">
+            <div className="flex gap-x-4 w-full">
                <label className="relative">
                   <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5">
                      Create Password <sup className="text-pink-200">*</sup>

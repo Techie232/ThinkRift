@@ -187,15 +187,26 @@ function CourseDetails() {
                      <p className="space-x-3 pb-4 text-3xl text-center font-semibold text-richblack-5">
                         Rs. {price}
                      </p>
-                     <button className="yellowButton bg-yellow-100 rounded-md w-fit mx-auto p-2" onClick={handleBuyCourse}>
-                        Buy Now
-                     </button>
-                     {
-                        token &&
-                        <button className="blackButton bg-richblack-100 rounded-md w-fit mx-auto p-2"
-                           onClick={handleAddToCart}
-                        >Add to Cart</button>
-                     }
+
+                     <div className="flex flex-col gap-4">
+                        <button
+                           className="bg-yellow-50 rounded-lg py-2 text-richblack-700 font-semibold"
+                           onClick={
+                              user && response?.data?.courseDetails?.studentsEnrolled.includes(user?._id)
+                                 ? () => navigate("/dashboard/enrolled-courses")
+                                 : handleBuyCourse
+                           }
+                        >
+                           {user && response?.data?.courseDetails?.studentsEnrolled.includes(user?._id)
+                              ? "Go To Course"
+                              : "Buy Now"}
+                        </button>
+                        {(!user || !response?.data?.courseDetails?.studentsEnrolled.includes(user?._id)) && (
+                           <button onClick={handleAddToCart} className="font-semibold bg-richblack-500 rounded-lg py-2">
+                              Add to Cart
+                           </button>
+                        )}
+                     </div>
                   </div>
                </div>
                {/* Courses Card */}
