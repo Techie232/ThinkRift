@@ -1,87 +1,143 @@
-# 🚀 ThinkRift – A Full-Stack Learning Platform
+# ThinkRift
 
-**ThinkRift** is a full-fledged, responsive learning platform built using the **MERN stack** (MongoDB, Express.js, React, Node.js). It is designed to offer a seamless educational experience with modern features such as secure authentication, media content management, and clean RESTful APIs.
+ThinkRift is a full-stack online learning platform. Students can discover and enrol in courses, watch course content, track their learning progress, and leave reviews. Instructors can create and manage courses from their dashboard.
 
----
+The project consists of a React frontend and an Express/MongoDB API. The Express server also serves the compiled frontend in production.
 
-## 🌟 Features
+## Tech stack
 
-- 🔐 **Authentication & Authorization** using **JWT (JSON Web Tokens)**
-- 🎥 **Media Management** for photos and videos via cloud-based services
-- 📱 **Fully Responsive UI** for mobile, tablet, and desktop
-- ⚙️ **RESTful APIs** following clean architectural practices
-- 🧠 Built as a complete learning solution – scalable and production-ready
+- React 18, React Router, Redux Toolkit, Tailwind CSS
+- Node.js and Express
+- MongoDB with Mongoose
+- JWT authentication, Cloudinary uploads, Razorpay payments, and Nodemailer email delivery
 
----
+## Prerequisites
 
-## 🧰 Tech Stack
+Before starting, install or prepare:
 
-### Frontend:
-- React.js
-- React Router
-- Axios
-- Tailwind CSS / CSS Modules (if used)
-- Redux Tookit (if applicable)
+- Node.js 18 or newer (the current LTS version is recommended)
+- npm (included with Node.js)
+- A MongoDB database (local or MongoDB Atlas)
+- Cloudinary, Razorpay, and SMTP credentials if you need uploads, payments, and email features
 
-### Backend:
-- Node.js
-- Express.js
-- MongoDB (with Mongoose)
-- JWT for authentication
-- ExpressFileUpload / Cloudinary / Media service integration
+## Installation
 
----
+Clone the repository and install dependencies for both applications:
 
-## 📁 Folder Structure (Monorepo)
-
-```
-thinkrift/
-├── client/         # React frontend
-│   └── ...
-    ├── server/         # Express backend
-│   └── ...
-└── README.md
+```bash
+git clone <repository-url>
+cd ThinkRift
+npm install
+cd server && npm install
+cd ..
 ```
 
----
+## Environment variables
 
-## 🚀 Deployment
+Create local environment files from the supplied examples:
 
-- **Frontend:** Deployed on [Render](https://render.com) / Render
-- **Backend:** Deployed on [Render](https://render.com) / Render 
-- **Media Storage:** Integrated with [Cloudinary](https://cloudinary.com) (or similar)
+```bash
+cp .env.example .env
+cp server/.env.example server/.env
+```
 
----
+Set the following values before running the application. Do not commit either `.env` file.
 
-## 🔐 Authentication
+### Frontend (`.env`)
 
-- JWT-based token system
-- Secure route protection middleware
-- Role-based access control (if implemented)
+```dotenv
+REACT_APP_BASE_URL=http://localhost:4000/api/v1
+REACT_APP_RAZORPAY_KEY=your_razorpay_key_id
+```
 
----
+### Backend (`server/.env`)
 
-## 📸 Media Handling
+```dotenv
+PORT=4000
+MONGODB_URL=your_mongodb_connection_string
+JWT_SECRET=replace_with_a_long_random_secret
 
-- Media files uploaded via the client or backend
-- Managed using third-party services (e.g., Cloudinary)
-- URLs stored in MongoDB and fetched on demand
+FRONTEND_URL=http://localhost:3000
 
----
+MAIL_HOST=your_smtp_host
+MAIL_USER=your_smtp_username
+MAIL_PASS=your_smtp_password
 
-## 🧪 API Testing
+RAZORPAY_KEY=your_razorpay_key_id
+RAZORPAY_SECRET=your_razorpay_key_secret
 
-- All APIs tested using [DiceBear](https://www.dicebear.com) (for mock avatars) and Postman
-- RESTful architecture with clearly defined endpoints
+FOLDER_NAME=thinkrift
+CLOUD_NAME=your_cloudinary_cloud_name
+API_KEY=your_cloudinary_api_key
+API_SECRET=your_cloudinary_api_secret
+```
 
----
+For a production-style local run, set `FRONTEND_URL` to the URL at which the frontend is served. The example value above is for the hot-reload frontend server.
 
-## 🤝 Contributing
+## Start the project
 
-Want to contribute? Feel free to fork the repo, open a PR, or raise issues!
+### Production-style local run
 
----
+Build the React app, then start the Express server. The server hosts both the UI and API on port `4000` by default.
 
-## 📃 License
+```bash
+npm run build
+npm start
+```
 
-[MIT](LICENSE)
+Open [http://localhost:4000](http://localhost:4000).
+
+### Development with hot reload
+
+Start the API in one terminal:
+
+```bash
+npm run server
+```
+
+In a second terminal, start the React development server:
+
+```bash
+npx react-scripts start
+```
+
+Open [http://localhost:3000](http://localhost:3000). Make sure `REACT_APP_BASE_URL` is set to `http://localhost:4000/api/v1` and `FRONTEND_URL` is set to `http://localhost:3000`.
+
+## Available scripts
+
+| Command | Description |
+| --- | --- |
+| `npm start` | Starts the Express server, which serves the existing production build. |
+| `npm run build` | Creates an optimized React build in `build/`. |
+| `npm run server` | Starts the backend with Nodemon for automatic restarts. |
+| `npm run dev` | Runs the repository's configured concurrent processes. For frontend hot reload, use the two-terminal workflow above. |
+
+## Project structure
+
+```text
+.
+├── src/                 # React application
+├── public/              # Static frontend files
+├── server/
+│   ├── config/          # Database, Cloudinary, and Razorpay configuration
+│   ├── controllers/     # API business logic
+│   ├── middlewares/     # Authentication middleware
+│   └── routes/          # API routes
+├── .env.example         # Frontend environment variable template
+└── server/.env.example  # Backend environment variable template
+```
+
+## API base path
+
+The backend exposes its API under `http://localhost:4000/api/v1` by default. Route groups include:
+
+- `/auth` for authentication and password management
+- `/profile` for user profiles and dashboards
+- `/course` for courses, categories, sections, progress, and reviews
+- `/payment` for Razorpay payment processing
+
+## Notes
+
+- Build the frontend again with `npm run build` whenever you change React source code before using `npm start`.
+- A valid MongoDB connection is required for the server to start successfully.
+- Payment, email, and media-upload functionality requires valid provider credentials.

@@ -49,6 +49,11 @@ app.use('/api/v1/profile', profileRoutes);
 app.use('/api/v1/course', courseRoutes);
 app.use('/api/v1/payment', paymentRoutes);
 
+// Lightweight endpoint for deployment health checks and uptime monitors.
+app.get('/health', (req, res) => {
+   return res.status(200).json({ status: 'ok' });
+});
+
 // default route
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "../build/index.html"));
