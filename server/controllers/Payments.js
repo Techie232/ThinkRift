@@ -162,11 +162,14 @@ const enrollStudents = async (courses, userId) => {
          )
 
          // send mail to the student
-         const emailResponse = await mailSender(
+         // Email delivery must not delay or block payment verification.
+         mailSender(
             enrolledStudent.email,
             `Successfully Enrolled into ${enrolledCourse.courseName}`,
             courseEnrollmentEmail(enrolledCourse.courseName, `${enrolledStudent.firstName + enrolledStudent.lastName}`)
-         )
+         ).catch((error) => {
+            console.error('Could not send course enrolment email:', error.message);
+         });
 
       } catch (error) {
          console.log('error in enrolling student', error);
@@ -191,7 +194,8 @@ exports.sendPaymentSuccessEmail = async (req, res) => {
       // student ko dhundho 
       const enrolledStudent = await User.findById(userId);
 
-      await mailSender(
+      // Return immediately so an SMTP outage cannot leave the client waiting.
+      mailSender(
          enrolledStudent.email,
          `Payment Received`,
          paymentSuccessEmail(enrolledStudent.firstName + enrolledStudent.lastName,
@@ -199,7 +203,14 @@ exports.sendPaymentSuccessEmail = async (req, res) => {
             orderId,
             paymentId
          )
-      )
+      ).catch((error) => {
+         console.error('Could not send payment success email:', error.message);
+      });
+
+      return res.status(200).json({
+         success: true,
+         message: 'Payment success email queued',
+      });
 
    } catch (error) {
       return res.status(500).json({
